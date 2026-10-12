@@ -151,8 +151,13 @@ html:not(.js) .ptabs a{color:var(--ink)}
 .palco.tem-acao::before{content:"";position:absolute;left:50%;right:8%;bottom:1.5%;height:7%;z-index:1;background:radial-gradient(50% 50% at 50% 50%,rgba(0,0,0,.6),transparent 70%);filter:blur(6px)}
 /* capa com arte de campanha (uma imagem só): aproximação lenta, feixes e paralaxe */
 .capa-palco.capa-ia h1{font-size:clamp(3.2rem,6vw,5.6rem)}
-.palco-arte{position:absolute;inset:-2%;width:104%;height:104%;max-width:none;object-fit:cover;object-position:60% 8%;
-  transform:translate3d(calc(var(--px)*-18px),calc(var(--py)*-10px + var(--sy)*.16px),0);animation:aproxima 18s ease-out both}
+.palco-arte{position:absolute;inset:-2% -5%;width:110%;height:104%;max-width:none;object-fit:cover;object-position:60% 8%;
+  transform:translate3d(calc(var(--px)*-18px),calc(var(--py)*-10px + var(--sy)*.16px),0);animation:surge 1.2s ease both,viaja-direita 44s linear infinite alternate}
+/* travelling lento, sem aproximação: a foto principal desliza para a direita e o rosto, para a esquerda */
+@keyframes surge{from{opacity:0}to{opacity:1}}
+@keyframes viaja-direita{from{translate:-3% 0}to{translate:3% 0}}
+@keyframes viaja-esquerda{from{translate:4% 0}to{translate:-4% 0}}
+.palco-ia .palco-camada.fantasma img{animation:entra-fantasma 1.4s cubic-bezier(.2,.7,.2,1) both,viaja-esquerda 44s linear infinite alternate}
 .palco-ia::after{background:linear-gradient(90deg,var(--bg) 0%,rgba(10,10,10,.82) 24%,rgba(10,10,10,.15) 50%,transparent 70%)}
 .palco-ia .palco-feixes{opacity:.28}
 /* rosto em detalhe ao fundo da arte de campanha: clareia só a área escura e some antes de encostar na atleta */
@@ -171,7 +176,6 @@ html:not(.js) .ptabs a{color:var(--ink)}
 .capa-ia:has(.comemora) .cta{text-shadow:none}
 .palco-ia .palco-camada.fantasma img{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%,#000 58%,transparent 92%),linear-gradient(#000 60%,transparent 96%);-webkit-mask-composite:source-in;
   mask-image:linear-gradient(90deg,transparent 0,#000 22%,#000 58%,transparent 92%),linear-gradient(#000 60%,transparent 96%);mask-composite:intersect}
-@keyframes aproxima{from{scale:1.12;opacity:0}8%{opacity:1}to{scale:1}}
 .capa-palco .wrap{z-index:2}
 .capa-palco h1{font-size:clamp(3.4rem,7.2vw,6.6rem);animation:revela-nome 1s cubic-bezier(.2,.7,.2,1) .35s both}
 .capa-palco .eyebrow,.capa-palco .capa-completo{animation:sobe .8s ease .2s both}
@@ -245,7 +249,6 @@ html:not(.js) .ptabs a{color:var(--ink)}
 .fita figcaption{padding-inline:14% 16%}
 .selecao{clip-path:polygon(0 0,100% 0,100% calc(100% - 3.4vw),50% 100%,0 calc(100% - 3.4vw))!important;padding-bottom:120px!important}
 .na-midia a{clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)}
-.cartao-instagram{clip-path:polygon(18px 0,100% 0,calc(100% - 18px) 100%,0 100%)}
 /* faixa de chevrons que corre entre as seções */
 .chevrons{height:30px;margin-block:26px 0;background:var(--gold);opacity:.85;animation:chevrons 1.4s linear infinite;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='30'%3E%3Cpath d='M2 2h12l14 13-14 13H2l14-13z'/%3E%3C/svg%3E") 0 0/44px 30px repeat-x;
@@ -279,12 +282,21 @@ html:not(.js) .ptabs a{color:var(--ink)}
 .nota{margin-top:14px;font-size:.8rem;color:var(--muted)}
 .top nav a.so-largo{display:none}
 @media (min-width:1100px){.top nav a.so-largo{display:inline}}
-.cartao-instagram{display:flex;align-items:center;gap:16px;padding:22px 40px;background:var(--gold);color:var(--gold-ink);text-decoration:none;transition:transform .25s ease,box-shadow .25s ease}
-.cartao-instagram:hover{transform:translateY(-4px) scale(1.02)}
-.cartao-instagram .icone{width:38px;height:38px;color:inherit}
-.cartao-instagram span{display:grid;font-size:.78rem;letter-spacing:.04em}
-.cartao-instagram b{font-size:1.25rem;font-weight:900}
-.cartao-instagram i{font-style:normal;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;margin-left:10px}
+/* botão único do Instagram: ícone e @ da atleta; nunca corta o texto, em nenhuma largura */
+.botao-instagram{display:inline-flex;align-items:center;justify-content:center;gap:12px;max-width:100%;padding:15px 26px;border-radius:999px;background:var(--gold);color:var(--gold-ink);
+  text-decoration:none;white-space:nowrap;transition:transform .2s ease,box-shadow .2s ease}
+.botao-instagram:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 12px 34px color-mix(in srgb,var(--gold) 40%,transparent)}
+.botao-instagram .icone{width:24px;height:24px;color:inherit;flex:none}
+.botao-instagram b{font-size:clamp(.92rem,3.8vw,1.1rem);font-weight:800;letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis}
+.contato .botao-instagram{padding:20px 34px}
+.contato .botao-instagram .icone{width:30px;height:30px}
+.contato .botao-instagram b{font-size:clamp(1rem,4.4vw,1.35rem)}
+.capa-acoes .botao-instagram{border-radius:6px;padding:14px 20px;text-shadow:none}
+@media (max-width:380px){
+  .contato .botao-instagram{padding:16px 18px;gap:9px}
+  .contato .botao-instagram .icone{width:22px;height:22px}
+  .contato .botao-instagram b{font-size:.86rem}
+}
 .trail-escudos em{display:block;margin-top:4px;font-style:normal;font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 .trail-escudos span{font-family:var(--display);font-weight:900;font-size:1.25rem;letter-spacing:0;color:var(--ink);display:block}
 .trail-escudos b{font-size:.82rem;color:#CFCAC0}
@@ -512,7 +524,8 @@ footer a{text-decoration:none}
   .capa-frase{display:none}
   .destaques article{clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);min-height:280px}
   .painel{padding-right:48px}
-  .cartao-instagram{width:100%;padding-inline:30px}
+  .contato .wrap{justify-content:center;text-align:center}
+  .contato .wrap>div{justify-items:center}
   .selecao .wrap{grid-template-columns:1fr}
   .selecao dl{grid-template-columns:repeat(2,minmax(0,1fr))}
   .contato .wrap{margin-inline:16px;padding-inline:20px}
